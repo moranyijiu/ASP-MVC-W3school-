@@ -1,0 +1,46 @@
+﻿@model WebApplication1.Models.ViewAddCatalogModel
+
+@{
+    ViewBag.Title = "修改分类";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var selectList = ViewData["CatalogList"] as List<SelectListItem>;
+}
+
+@section Style
+{
+    <style>
+        #head {
+            padding-left: 0px;
+            padding-right: 0px;
+        }
+
+        #content {
+            background-color: #fff;
+            border-radius: 2px;
+        }
+    </style>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+}
+
+<div id="content" class="row-fluid container" style="padding:50px;">
+
+    <div class="panel panel-default">
+        <div class="panel-heading">修改分类</div>
+        <div class="panel-body">
+            <form class="" action="/manage/modifycatalog" method="post">
+                <div class="form-group">
+                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "输入分类名" })
+                    @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+                </div>
+                @Html.HiddenFor(m => m.Identity)
+                <div class="form-group">
+                    @Html.DropDownListFor(m => m.LastSort, selectList, new { @class = "form-control" })
+                </div>
+                <button type="submit" class="btn btn-default">保存</button>
+            </form>
+        </div>
+    </div>
+
+</div>

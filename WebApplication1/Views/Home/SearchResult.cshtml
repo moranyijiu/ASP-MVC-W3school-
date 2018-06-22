@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewBag.Title = "SearchResult";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var articleList = (List<WebApplication1.Models.Article>)ViewBag.ArticleList;
+    
+}
+
+@section Style
+{
+    <style>
+         #head {
+            padding-left: 0px;
+            padding-right: 0px;
+        }
+
+        #content {
+            background-color: #fff;
+            border-radius: 2px;
+        }
+
+        h3 {
+            border-bottom: 1px dotted #ddd;
+            padding-bottom: 3px;
+        }
+    </style>
+}
+
+
+
+
+<div id="content" class="row-fluid container">
+  
+    @if (articleList == null)
+    {
+        <h2>查询错误</h2>
+    }
+    else
+    {
+        for (int i = 0; i < articleList.Count; i++)
+        {
+            <h3><a href="/home/handle?identity=@articleList[i].Identity">@articleList[i].Title</a></h3>
+            <div>@Html.RemoveHtmlTag(articleList[i].Content, 200)</div>
+           
+        }
+    }
+    
+
+</div>

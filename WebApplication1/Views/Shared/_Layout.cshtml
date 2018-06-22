@@ -1,0 +1,74 @@
+﻿@using WebApplication1.Models;
+@{ 
+    var repositiory = new Repository();
+    var list = repositiory.GetSelect<Catalog,int>(m => true, m => m.Sort);
+}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>@ViewBag.Title</title>
+    <!-- 引入Bootstrap的CSS样式 -->
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/docs_min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
+    @RenderSection("Style")
+
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    
+    <script src="https://img.hcharts.cn/highcharts/highcharts.js"></script>
+    <script src="https://img.hcharts.cn/highcharts/modules/exporting.js"></script>
+    <script src="https://img.hcharts.cn/highcharts/modules/wordcloud.js"></script>
+    <script src="https://img.hcharts.cn/highcharts/modules/oldie.js"></script>
+    <script src="https://img.hcharts.cn/highcharts/themes/dark-unica.js"></script>
+
+   
+    <script src="https://img.hcharts.cn/highcharts/highcharts-more.js"></script>  
+    <script src="https://img.hcharts.cn/highcharts-plugins/highcharts-zh_CN.js"></script>
+    
+</head>
+<body style="background-color:#ccc;">
+    <div class="container" id="head">
+        <h1>编程之家</h1>
+        <nav class="navbar navbar-inverse">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="/">首页</a></li>
+                    @for (int i = 0; i < list.Count; i++)
+                    {
+                        <li><a href="/@(list[i].Identity).html">@list[i].Name</a></li>
+                    }
+                    <li class="active"><a href="/Home/Search">搜索</a></li>
+                    <li class="active"><a href="/Home/Document">文档资料</a></li>
+                    <li><a href="/Home/About">关于</a></li>
+                </ul>
+
+                @if (Context.User.Identity.IsAuthenticated)
+                {
+                    <ul class="nav navbar-nav navbar-right hidden-sm">                       
+                        <li><a href="/manage/addcatalog">新增分类</a></li>
+                        <li><a href="/manage/Up">上传资料</a></li>
+                        <li><a href="/manage/chart">统计</a></li>
+                        <li><a href="/account/logoff">注销</a></li>
+                        <li><a>@Context.User.Identity.Name</a></li>
+                    </ul>
+                }
+            </div>
+        </nav>
+    </div>
+    @RenderBody()
+    <div class="container" style="text-align:center;padding:20px;">
+        版权所有 &copy;许昌学院信息工程学院朱剑昊 2018-@DateTime.Now.Year www.*******.cn 豫ISP20171212
+    </div>
+    <!-- 先引入jQuery的支持-->
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <!-- 在引入bootstrap是js支持-->
+    <script src="~/Scripts/bootstrap.min.js"></script>
+</body>
+</html>

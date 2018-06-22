@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.Title = "Document";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var doclist = ViewBag.list;
+}
+@section Style
+{
+  
+}
+ 
+
+
+
+<div id="content" class="row-fluid container">
+    <div class="row bootstrap-admin-no-edges-padding">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="text-muted bootstrap-admin-box-title">文档资料</div>
+                </div>
+                <div class="bootstrap-admin-panel-content">
+
+                    <p class="text-warning">此所有文档资料是完全免费的</p>
+                    <p class="text-error">此所有文档资料是非盈利性的</p>
+                    <p class="text-info">此所有文档资料一直在升级和更新</p>
+
+
+                    点击下载 <kbd>Click</kbd>
+                    @{
+                        for (int i = 0; i < doclist.Count; i++)
+                        {
+                            <button type="button" class="btn btn-lg"><a href="/Home/Download?filePath=@doclist[i].Path&fileName='@doclist[i].Name'">@doclist[i].Name</a></button>
+                        }
+                    }
+                                   
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

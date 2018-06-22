@@ -1,0 +1,58 @@
+﻿@{
+    ViewBag.Title = "首页";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var courseList = ViewBag.CourseList as List<WebApplication1.Models.Course>;
+}
+
+@section Style
+{
+    <style>
+        #head {
+            padding-left: 0px;
+            padding-right: 0px;
+        }
+
+        #content {
+            background-color: #fff;
+            border-radius: 2px;
+        }
+
+        .thumbnail {
+            border-radius: 0;
+            display: block;
+            margin-bottom: 30px;
+            margin-top: 5px;
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 310px;
+            text-align: center;
+        }
+
+            .thumbnail img {
+                width: 254px;
+            }
+    </style>
+}
+
+<div id="content" class="row-fluid container">
+    <div class="row">
+        @for (int i = 0; i < courseList.Count; i++)
+        {
+            <div class="col-sm-6 col-md-4 col-lg-3 ">
+                <div class="thumbnail" style="height: 336px;">
+                    <a href="/@courseList[i].Catalog.Identity/@(courseList[i].Identity).html" title="@courseList[i].Name" target="_blank" onclick="_hmt.push(['_trackEvent', 'tile', 'click', 'codeguide'])">
+                        <img class="lazy" src="/uploads/@courseList[i].Thumb" data-src="" alt="@courseList[i].Name" width="300" height="150">
+                    </a>
+                    <div class="caption">
+                        <h3>
+                            <a href="/@courseList[i].Catalog.Identity/@(courseList[i].Identity).html" title="@courseList[i].Name" target="_blank" onclick="_hmt.push(['_trackEvent', 'tile', 'click', 'codeguide'])">@courseList[i].Name</a>
+                            <br><small>@courseList[i].Catalog.Name</small>
+                        </h3>
+                        <p>@courseList[i].Intro.Substring(0, courseList[i].Intro.Length>70?70: courseList[i].Intro.Length)</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+

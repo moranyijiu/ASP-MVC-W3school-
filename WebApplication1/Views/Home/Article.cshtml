@@ -1,0 +1,67 @@
+﻿@model WebApplication1.Models.Article
+
+@{
+    ViewBag.Title = "核心技术";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var course = ViewBag.Course as WebApplication1.Models.Course;
+    var articleList = ViewBag.ArticleList as List<WebApplication1.Models.Article>;
+    
+}
+
+@section Style
+{
+    <style>
+        #head {
+            padding-left: 0px;
+            padding-right: 0px;
+        }
+
+        #content {
+            background-color: #fff;
+            border-radius: 2px;
+        }
+    </style>
+}
+
+
+<div id="content" class="row-fluid container">
+    <ol class="breadcrumb">
+        <li><a href="/">首页</a></li>
+        <li><a href="/@(course.Catalog.Identity).html">@course.Catalog.Name</a></li>
+        <li><a href="/@(course.Catalog.Identity)/@(course.Identity).html">@course.Name</a></li>
+        @if (Context.User.Identity.IsAuthenticated)
+        {
+            @Model.Title <a href="/manage/modifyarticle?identity=@Model.Identity">[修改文章]</a>
+            <a href="/manage/deletearticle?identity=@Model.Identity">[删除文章]</a>
+        }  
+    </ol>
+    <div class="col-md-9" style="padding:3px;">
+        <h3>@Model.Title <small>重点</small></h3>
+        @*<nav aria-label="...">
+
+            <ul class="pager">
+                <li class="previous"><a href="#"><span aria-hidden="true">&larr;</span> 上一篇</a></li>
+                <li class="next"><a href="#">下一篇 <span aria-hidden="true">&rarr;</span></a></li>
+            </ul>
+        </nav>*@
+        <div class="show-content">
+            @Html.Raw(Model.Content)
+        </div>
+        @*<nav aria-label="...">
+            <ul class="pager">
+                <li class="previous"><a href="#"><span aria-hidden="true">&larr;</span> 上一篇</a></li>
+                <li class="next"><a href="#">下一篇 <span aria-hidden="true">&rarr;</span></a></li>
+            </ul>
+        </nav>*@
+    </div>
+
+    <div class="col-md-3">
+        <h2>最新课程</h2>
+        <ul class="nav nav-stacked" style="border-left:1px solid #ccc">
+            @for (int i = 0; i < articleList.Count; i++)
+            {
+                <li><a href="/@course.Catalog.Identity/@course.Identity/@(articleList[i].Identity).html">@articleList[i].Title</a></li>
+            }
+        </ul>
+    </div>   
+</div>

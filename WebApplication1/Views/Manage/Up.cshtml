@@ -1,0 +1,34 @@
+﻿
+@{
+    ViewBag.Title = "Up";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Style
+{
+
+}
+
+
+
+
+<div id="content" class="row-fluid container">
+    <div class="row bootstrap-admin-no-edges-padding">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="text-muted bootstrap-admin-box-title">资料上传</div>
+                </div>
+                <div class="bootstrap-admin-panel-content">
+                   @using (Html.BeginForm("Upload", "Manage", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                   {
+                    <text>选择上传文件：</text><input name="file" type="file" id="file" />
+                    <br />
+                    <br />
+                    <input type="submit" name="Upload" value="上传" />
+                   }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

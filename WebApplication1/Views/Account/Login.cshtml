@@ -1,0 +1,63 @@
+﻿@model WebApplication1.Models.ViewLoginModel
+
+@{
+    ViewBag.Title = "登录";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var path = ViewBag.Path.ToString();
+}
+
+@section Style
+{
+    <style>
+        #head {
+            padding-left: 0px;
+            padding-right: 0px;
+        }
+
+        #content {
+            background-color: #fff;
+            border-radius: 2px;
+        }
+    </style>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    @*界面验证JS引入*@
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+}
+
+<div id="content" class="row-fluid container" style="padding:50px;">
+    <div class="panel-default" style="max-width:400px;margin:0 auto;">
+            
+        <form action="/admin/@path" class="form-horizontal" role="form" method="post">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(m => m.Name, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <div class="checkbox">
+                        @Html.CheckBoxFor(m => m.RememberMe)
+                        @Html.LabelFor(m => m.RememberMe)
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="登录" class="btn btn-default" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

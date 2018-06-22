@@ -1,0 +1,75 @@
+﻿
+@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var articleList = (List<WebApplication1.Models.Article>)ViewBag.ArticleList;
+}
+@section Style
+{
+
+}
+<script>
+    function check() {
+        if (form.key.value == "") {
+            alert("请输入搜索内容！");
+            return false;
+        }
+    }
+</script>
+
+<div id="content" class="row-fluid container">
+    <div class="row bootstrap-admin-no-edges-padding">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="text-muted bootstrap-admin-box-title">搜索</div>
+                </div>
+                <div id="container"></div>
+
+              
+
+                <div id="content" class="row-fluid container">
+                    <div class="row bootstrap-admin-no-edges-padding">
+                        <form name="form" action="/Home/SearchResult" method="get"  onsubmit="return check()">
+                            <div class="input-group col-md-3" style="margin-top:0px ">
+                                <input type="text" name="key" form-control" placeholder="请输入字段名" / >
+                                <span class="input-group-btn">
+                                    <button class="btn btn-info btn-search">查找</button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var text = '@for (int i = 0; i < articleList.Count; i++) {<text>@articleList[i].Title,</text>}';
+    var data = text
+    .split(/[,\. ]+/g)
+    .reduce(function (arr, word) {
+        var obj = arr.find(function (obj) {
+            return obj.name === word;
+        });
+        if (obj) {
+            obj.weight += 1;
+        } else {
+            obj = {
+                name: word,
+                weight: 1
+            };
+            arr.push(obj);
+        }
+        return arr;
+    }, []);
+    Highcharts.chart('container', {
+        series: [{
+            type: 'wordcloud',
+            data: data
+        }],
+        title: {
+            text: '词云图'
+        }
+    });
+</script>

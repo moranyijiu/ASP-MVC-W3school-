@@ -1,0 +1,81 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var course = ViewBag.Course as WebApplication1.Models.Course;
+    ViewBag.Title = course.Name;
+    var articleList = ViewBag.ArticleList as List<WebApplication1.Models.Article>;
+}
+
+@section Style
+{
+    <style>
+        #head {
+            padding-left: 0px;
+            padding-right: 0px;
+        }
+
+        #content {
+            background-color: #fff;
+            border-radius: 2px;
+        }
+
+        h3 {
+            border-bottom: 1px dotted #ddd;
+            padding-bottom: 3px;
+        }
+    </style>
+}
+
+<div id="content" class="row-fluid container" style="border-bottom:1px solid #ddd;padding:10px;">
+    <ol class="breadcrumb">
+        <li><a href="/">首页</a></li>
+        <li><a href="/home/about">....</a></li>
+        <li><a href="/@course.Catalog.Identity/@(course.Identity).html">@course.Name</a></li>
+        @if (Context.User.Identity.IsAuthenticated)
+        {
+            <li>
+                
+                <a target="_blank" href="/manage/addarticle/@course.ID">[添加文章]</a>
+            </li>
+        }
+    </ol>
+    <div class="col-md-12" style="padding:10px;">
+        <div class="col-md-6" style="padding:3px;">
+            <img src="/uploads/@course.Thumb" data-src="holder.js/100%x200" alt="100%x200" style="height: 300px; width: 100%; display: block;" />
+        </div>
+        <div class="col-md-6" style="padding:10px;">
+            <h3>@course.Name</h3>
+            &nbsp;&nbsp;&nbsp;&nbsp;@course.Intro
+            <div>
+                <div style="float:left;padding:5px;">
+                    <p>发布日期：@course.AddTime.ToShortDateString() 更新日期：@course.AddTime.ToShortDateString()</p>
+                    <p>文章：admin </p>
+                </div>
+                <div style="float:right;">
+                    @{
+                        //判断此分类是否有文章。
+                        if (articleList.Count==0)
+                        {
+                            <button type="button" class="btn btn-warning">马上学习</button>
+                        }
+                        else
+                        {
+                            <button type="button" class="btn btn-warning"><a href="/@course.Catalog.Identity/@course.Identity/@(articleList[0].Identity).html" style="text-decoration:none; color:#fff">马上学习</a></button>
+                        }
+                    }
+                    
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="content" class="row-fluid container">
+    @for (int i = 0; i < articleList.Count; i++)
+    {
+        <h3><a href="/@course.Catalog.Identity/@course.Identity/@(articleList[i].Identity).html">@articleList[i].Title</a></h3>
+        <div>@Html.RemoveHtmlTag(articleList[i].Content,200)</div>
+    }
+   
+</div>
+
